@@ -44,7 +44,7 @@ userRouter.post('/login', async (req, res) => {
     } catch(err){
         res.send({"msg": err});
     }
-})
+});
 
 module.exports = {
     userRouter

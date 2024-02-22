@@ -9,15 +9,17 @@ import {
   Tooltip,
   Button,
 } from "@material-tailwind/react";
-
 import { Link } from "react-router-dom";
-
-
 import { MessageCard, ProfileInfoCard } from "@/widgets/cards";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { conversationsData, projectsData } from "@/data";
+import { useSelector } from "react-redux";
 
 export function Profile() {
+
+  let userData = useSelector((state) => state);
+  console.log(userData);
+
   return (
     <>
       <div className="relative mt-8 h-32 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
