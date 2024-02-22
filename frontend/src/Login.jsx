@@ -19,22 +19,64 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
+
+  const url = "http://localhost:8000/Users/login";
   
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can implement your login logic here
-    // For demo, I'm just displaying the input values in a toast message
-    toast({
-      title: 'Login Attempt',
-      description: `Email: ${email}, Password: ${password}`,
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    });
-
-    navigate('/dashboard/home');
     
+    fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.token) {
+                  const userData = {
+                    token: data.token,
+                    userData: data.userDetails,
+                  }
+                  
+                  localStorage.setItem("userDetails", userData);
+
+                    setTimeout(() => {
+                      navigate('/dashboard/home');
+
+                        toast({
+                          title: 'Login Attempt',
+                          description: `You have successfully logged in!`,
+                          status: 'success',
+                          duration: 5000,
+                          isClosable: true,
+                        });
+                    }, 1000);
+                } else{
+                  toast({
+                    title: 'Login Failed',
+                    description: `Please log in with correct credentials`,
+                    status: 'error',
+                    duration: 2000,
+                    isClosable: true,
+                  });
+                }
+
+            })
+            .catch(err => {
+              toast({
+                title: 'Login Failed',
+                description: `Please log in with correct credentials`,
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+              });
+            });
   };
 
   const handleSignUpClick = () => {
@@ -52,7 +94,7 @@ const Login = () => {
       borderRadius={8}
       bg='black'
     >
-      <Flex flexDir='column' h='100vh' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
+      <Flex flexDir='column' pb='10%' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
         <Flex h='17vh' w='100%' justify='space-between' align='center'>
         <Image boxSize='100px'
         ml="2%"
@@ -61,7 +103,7 @@ const Login = () => {
           borderRadius={10}
           alt='Dan Abramov' />
         </Flex>
-        <Heading as="h1" size="3xl" color='#00FFFF' textShadow='1px 1px black'>
+        <Heading as="h1" size="3xl" color='black' textShadow='2px 2px #00FFFF'>
           Login
         </Heading>
         <form onSubmit={handleSubmit}>
