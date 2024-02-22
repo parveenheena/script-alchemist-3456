@@ -8,7 +8,8 @@ import {
   Flex,
   useToast,
   Heading,
-  Image
+  Image,
+  Text
 } from '@chakra-ui/react';
 import logo from './assets/verve.png';
 import { useNavigate } from 'react-router-dom';
@@ -17,31 +18,60 @@ const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [mobileNo, setMobileNo] = useState('');
+
   const toast = useToast();
   const navigate = useNavigate();
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
+  const url = "http://localhost:8000/Users/register";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can implement your signup logic
-    // For example, you can send formData to your backend API
+    // Here is implementation of signup logic
+    
+    fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                username: username,
+                email: email,
+                mobileNo: mobileNo,
+                password: password
+            })
+        }).then(res => {
+          if (res.status === 400) {
+            throw new Error('User already exists'); // or parse res.statusText for more detailed error message
+          }
+          return res.json();
+        })
+            .then(data => {
+              // Display a toast message for demonstration
 
-    // Display a toast message for demonstration
-    toast({
-      title: 'Signup Successful',
-      description: 'You have successfully signed up!',
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    });
+              toast({
+                title: 'Signup Successful',
+                description: 'You have successfully registered!',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+              });
 
+              navigate('/login');
+            })
+            .catch(err => {
+              toast({
+                title: 'Signup Failed',
+                description: err.message,
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+              });
+            });
+  };
+
+  const handleLoginClick = () => {
+    // Navigate to the login page
     navigate('/login');
   };
 
@@ -54,7 +84,7 @@ const SignupPage = () => {
       borderRadius={8}
       bg='black'
     >
-      <Flex flexDir='column' h='100vh' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
+      <Flex flexDir='column' pb='10%' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
         <Flex h='17vh' w='100%' justify='space-between' align='center'>
         <Image boxSize='100px'
         ml="2%"
@@ -63,7 +93,7 @@ const SignupPage = () => {
           borderRadius={10}
           alt='Dan Abramov' />
         </Flex>
-        <Heading as="h1" size="3xl" color='#00FFFF' textShadow='1px 1px black'>
+        <Heading as="h1" size="3xl" color='black' textShadow='2px 2px #00FFFF'>
           Sign Up
         </Heading>
         <form onSubmit={handleSubmit}>
@@ -96,6 +126,22 @@ const SignupPage = () => {
               borderRadius={10}
             />
           </FormControl>
+
+          <FormControl>
+            <FormLabel my='10px' fontSize={18}>Mobile No.</FormLabel>
+            <Input
+              type="number"
+              placeholder="Enter your mobile no."
+              value={mobileNo}
+              onChange={(e) => setMobileNo(e.target.value)}
+              w='300px'
+              p={5}
+              focusBorderColor="#00FFFF"
+              fontSize={18}
+              borderRadius={10}
+            />
+          </FormControl>
+
           <FormControl>
             <FormLabel my='10px' fontSize={18}>Password</FormLabel>
             <Input
@@ -114,6 +160,13 @@ const SignupPage = () => {
             Sign Up
           </Button>
           
+          <Flex mt={30} gap='5%' align='center'>
+          <Text fontSize={18}>Already have an account!</Text>
+          <Button color='white' bg='Black' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' mr='2%' onClick={handleLoginClick} >
+            Login
+          </Button>
+          </Flex>
+
         </form>
       </Flex>
     </Box>
