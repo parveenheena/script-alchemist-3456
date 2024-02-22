@@ -2,13 +2,16 @@ import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
-
   Button,
   IconButton,
   Typography,
 } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
-import verve from "../../assets/verve.png"
+import verve from "../../assets/verve.png";
+import logoutIcon from "../../assets/logout.png";
+import {useDispatch} from 'react-redux';
+import {setDataIntoStore} from '../../redux/userActionAndReducer/actions';
+
 
 export function Sidenav({  routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -18,6 +21,22 @@ export function Sidenav({  routes }) {
     white: "bg-white shadow-sm",
     transparent: "bg-transparent",
   };
+
+  //logout functionality---------------
+  const toast = useToast();
+
+  const usedispatch = useDispatch();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    const emptyObj = {
+      token: "",
+      userDetails: {}
+    }
+    usedispatch(setDataIntoStore(emptyObj));
+    window.location.href = '/login';
+  }
+  //logout functionality---------------
 
   return (
     <aside
@@ -92,6 +111,13 @@ export function Sidenav({  routes }) {
                 </NavLink>
               </li>
             ))}
+            <Button className="flex items-center gap-4 px-4 capitalize" fullWidth onClick={handleLogout}>
+              <img src={logoutIcon} alt="Logout" style={{ height: "20px", width: "20px" }} />
+              <Typography color="inherit" className="font-medium capitalize">
+                Logout
+              </Typography>
+            </Button>
+            
           </ul>
         ))}
       </div>
