@@ -5,13 +5,49 @@ import {
     CardBody,
     CardHeader,
     CardFooter,
-    Button
+    Button,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
   } from "@material-tailwind/react";
 
 function QuizCard({obj}) {
-  console.log(obj)
   const [logo,setLogo] = useState(`https://skillicons.dev/icons?i=${obj.language.toLowerCase()}&theme=dark`);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(!open);
+
+  const startQuiz = (language)=> {
+    handleOpen();
+    console.log(language)
+  }
   return (
+    
+    <>
+    
+      <Dialog open={open} handler={handleOpen}>
+        <DialogHeader>ByteBlitz Quiz.</DialogHeader>
+        <DialogBody>
+          <Typography>1. Follow guidelines closely, meet deadlines, communicate progress proactively.</Typography>
+          <Typography>2. Read questions carefully, avoid rushing, ensure accuracy in responses.</Typography>
+          <Typography>3. Select the most suitable answer, eliminate obvious incorrect options.</Typography>
+          <Typography>4. Submit answers following provided instructions, adhere to submission format.</Typography>
+          <Typography>5. Each question carries one mark.</Typography>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="black"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button variant="gradient" color="black" onClick={()=>startQuiz(obj.language)}>
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
     <Card className="w-64 max-w-[26rem] shadow-lg">
 
     <CardHeader floated={false}
@@ -64,13 +100,13 @@ function QuizCard({obj}) {
       
     </CardBody>
     <CardFooter className="pt-2">
-      <Button size="lg" fullWidth={true}>
-
+      <Button size="lg" onClick={handleOpen} fullWidth={true}>
         Attempt Quiz
       </Button>
 
     </CardFooter>
   </Card>
+  </>
   )
 }
 
