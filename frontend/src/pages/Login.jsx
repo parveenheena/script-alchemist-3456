@@ -11,10 +11,10 @@ import {
   Image,
   Text
 } from '@chakra-ui/react';
-import logo from './assets/verve.png';
+import logo from '../assets/verve.png';
 import { useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-import {setDataIntoStore} from './redux/userActionAndReducer/actions';
+import {setDataIntoStore} from '../redux/userActionAndReducer/actions';
 
 const Login = () => {
   const [email, setEmail] = useState('');
