@@ -11,16 +11,30 @@ import {
     DialogBody,
     DialogFooter,
   } from "@material-tailwind/react";
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setQuizQuestion } from '@/redux/userActionAndReducer/actions';
+import { useNavigate } from 'react-router-dom';
 
 function QuizCard({obj}) {
   const [logo,setLogo] = useState(`https://skillicons.dev/icons?i=${obj.language.toLowerCase()}&theme=dark`);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
-
-  const startQuiz = (language)=> {
+const dispatch = useDispatch();
+const navigate = useNavigate();
+  const startQuiz = async (language)=> {
     handleOpen();
-    console.log(language)
+    try{
+      const res = await axios.post(`http://localhost:8000/questions`,{language})
+      dispatch(setQuizQuestion(res.data.questions));
+      navigate('/quiz');
+    } catch(err){
+      console.log(err);
+    }
+   
   }
+
+
   return (
     
     <>

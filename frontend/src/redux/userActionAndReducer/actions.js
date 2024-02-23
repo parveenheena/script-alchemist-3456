@@ -1,6 +1,7 @@
 
 const type = {
-    STORE_DETAILS_OF_USER: 'store_details_of_user'
+    STORE_DETAILS_OF_USER: 'store_details_of_user',
+    Quiz_Question: 'Quiz_Question'
 }
 
 const setDataIntoStore = (dataObj) => {
@@ -10,4 +11,11 @@ const setDataIntoStore = (dataObj) => {
     }
 }
 
-export {type, setDataIntoStore};
+const setQuizQuestion = (dataObj) => {
+    return {
+        type: type.Quiz_Question,
+        payload: dataObj
+    }
+}
+
+export {type, setDataIntoStore, setQuizQuestion};

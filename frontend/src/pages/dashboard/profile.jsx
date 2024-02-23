@@ -20,7 +20,7 @@ import { PencilIcon } from "@heroicons/react/24/solid";
 import { conversationsData, projectsData } from "@/data";
 import { useSelector } from "react-redux";
 import { UserQuizCard } from "@/widgets/cards/UserQuizCard";
-import styled from 'styled-components';
+
 import Lottie from "lottie-react";
 import { useState } from "react";
 
