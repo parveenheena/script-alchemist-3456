@@ -23,7 +23,6 @@ export function Sidenav({  routes }) {
   };
 
   //logout functionality---------------
-  const toast = useToast();
 
   const usedispatch = useDispatch();
 
