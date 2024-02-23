@@ -6,28 +6,28 @@ import {
   FormLabel,
   Input,
   Flex,
-  useToast,
   Heading,
+  useToast,
   Image,
   Text
 } from '@chakra-ui/react';
-import logo from './assets/verve.png';
+import logo from '../assets/verve.png';
 import { useNavigate } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {setDataIntoStore} from '../redux/userActionAndReducer/actions';
 
-const SignupPage = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [mobileNo, setMobileNo] = useState('');
-
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const url = "http://localhost:8000/Users/register";
+  const url = "http://localhost:8000/Users/login";
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here is implementation of signup logic
     
     fetch(url, {
             method: "POST",
@@ -35,34 +35,46 @@ const SignupPage = () => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                username: username,
                 email: email,
-                mobileNo: mobileNo,
                 password: password
             })
-        }).then(res => {
-          if (res.status === 400) {
-            throw new Error('User already exists'); // or parse res.statusText for more detailed error message
-          }
-          return res.json();
-        })
+        }).then(res => res.json())
             .then(data => {
-              // Display a toast message for demonstration
+                console.log(data);
+                if (data.token) {
+                  const userData = {
+                    token: data.token,
+                    userDetails: data.userDetails,
+                  }
+                  
+                  dispatch(setDataIntoStore(userData));
 
-              toast({
-                title: 'Signup Successful',
-                description: 'You have successfully registered!',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-              });
+                    setTimeout(() => {
+                      navigate('/dashboard/home');
 
-              navigate('/login');
+                        toast({
+                          title: 'Login Success',
+                          description: `You have successfully logged in!`,
+                          status: 'success',
+                          duration: 5000,
+                          isClosable: true,
+                        });
+                    }, 1000);
+                } else{
+                  toast({
+                    title: 'Login Failed',
+                    description: `Please log in with correct credentials`,
+                    status: 'error',
+                    duration: 2000,
+                    isClosable: true,
+                  });
+                }
+
             })
             .catch(err => {
               toast({
-                title: 'Signup Failed',
-                description: err.message,
+                title: 'Login Failed',
+                description: `Please log in with correct credentials`,
                 status: 'error',
                 duration: 2000,
                 isClosable: true,
@@ -70,10 +82,11 @@ const SignupPage = () => {
             });
   };
 
-  const handleLoginClick = () => {
-    // Navigate to the login page
-    navigate('/login');
+  const handleSignUpClick = () => {
+    // Navigate to the sign up page
+    navigate('/signuppage');
   };
+
 
   return (
     <Box
@@ -83,6 +96,7 @@ const SignupPage = () => {
       borderWidth={1}
       borderRadius={8}
       bg='black'
+      h="100%"
     >
       <Flex flexDir='column' pb='10%' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
         <Flex h='17vh' w='100%' justify='space-between' align='center'>
@@ -94,24 +108,9 @@ const SignupPage = () => {
           alt='Dan Abramov' />
         </Flex>
         <Heading as="h1" size="3xl" color='black' textShadow='2px 2px #00FFFF'>
-          Sign Up
+          Login
         </Heading>
         <form onSubmit={handleSubmit}>
-        <FormControl>
-            <FormLabel my='10px' fontSize={18}>Username</FormLabel>
-            <Input
-              type="name"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              w='300px'
-              p={5}
-              fontSize={18}
-              focusBorderColor="#00FFFF"
-              borderRadius={10}
-            />
-          </FormControl>
-
           <FormControl>
             <FormLabel my='10px' fontSize={18}>Email address</FormLabel>
             <Input
@@ -126,22 +125,6 @@ const SignupPage = () => {
               borderRadius={10}
             />
           </FormControl>
-
-          <FormControl>
-            <FormLabel my='10px' fontSize={18}>Mobile No.</FormLabel>
-            <Input
-              type="number"
-              placeholder="Enter your mobile no."
-              value={mobileNo}
-              onChange={(e) => setMobileNo(e.target.value)}
-              w='300px'
-              p={5}
-              focusBorderColor="#00FFFF"
-              fontSize={18}
-              borderRadius={10}
-            />
-          </FormControl>
-
           <FormControl>
             <FormLabel my='10px' fontSize={18}>Password</FormLabel>
             <Input
@@ -157,20 +140,19 @@ const SignupPage = () => {
             />
           </FormControl>
           <Button mt={30} w='300px' bg='#00FFFF' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' type="submit">
-            Sign Up
+            LOGIN
           </Button>
           
           <Flex mt={30} gap='5%' align='center'>
-          <Text fontSize={18}>Already have an account!</Text>
-          <Button color='white' bg='Black' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' mr='2%' onClick={handleLoginClick} >
-            Login
+          <Text fontSize={18}>Don't have an account!</Text>
+          <Button color='white' bg='Black' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' mr='2%' onClick={handleSignUpClick} >
+            Sign Up
           </Button>
           </Flex>
-
         </form>
       </Flex>
     </Box>
   );
 };
 
-export default SignupPage;
+export default Login;
