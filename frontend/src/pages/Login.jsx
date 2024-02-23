@@ -11,14 +11,17 @@ import {
   Image,
   Text
 } from '@chakra-ui/react';
-import logo from './assets/verve.png';
+import logo from '../assets/verve.png';
 import { useNavigate } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {setDataIntoStore} from '../redux/userActionAndReducer/actions';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const url = "http://localhost:8000/Users/login";
   
@@ -41,16 +44,16 @@ const Login = () => {
                 if (data.token) {
                   const userData = {
                     token: data.token,
-                    userData: data.userDetails,
+                    userDetails: data.userDetails,
                   }
                   
-                  localStorage.setItem("userDetails", userData);
+                  dispatch(setDataIntoStore(userData));
 
                     setTimeout(() => {
                       navigate('/dashboard/home');
 
                         toast({
-                          title: 'Login Attempt',
+                          title: 'Login Success',
                           description: `You have successfully logged in!`,
                           status: 'success',
                           duration: 5000,
@@ -93,6 +96,9 @@ const Login = () => {
       borderWidth={1}
       borderRadius={8}
       bg='black'
+
+      h="100%"
+
     >
       <Flex flexDir='column' pb='10%' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
         <Flex h='17vh' w='100%' justify='space-between' align='center'>

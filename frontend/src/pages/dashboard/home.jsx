@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Card,
-  CardBody
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Button
 } from "@material-tailwind/react";
+import axios from "axios";
+import QuizCard from "@/widgets/cards/QuizCard";
 
 export function Home() {
+  const [quizzes, setQuizzes] = useState([])
+  useEffect(()=> {
+   axios.get('http://localhost:8000/quizzes').then(res=>setQuizzes(res.data.quiz)).catch(err=>console.log(err))
+  },[]);
+
   return (
     <div className="mt-12">
       <div className="relative mt-8 h-32 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover bg-center">
@@ -28,6 +38,11 @@ export function Home() {
           </div>
         </CardBody>
       </Card>
+
+    <div className="m-6 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
+      {quizzes.map((item,index)=><QuizCard key={index} obj={item}/>)}
+     
+      </div>
     </div>
   );
 }

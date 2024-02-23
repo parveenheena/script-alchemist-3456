@@ -5,19 +5,37 @@ import {
   CardFooter,
   Avatar,
   Typography,
-
   Tooltip,
   Button,
+  Dialog,
+  Input,
+  Checkbox,
+  Textarea,
 } from "@material-tailwind/react";
 
+import animated from "../../assets/animationProfile.json"
 import { Link } from "react-router-dom";
-
-
 import { MessageCard, ProfileInfoCard } from "@/widgets/cards";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { conversationsData, projectsData } from "@/data";
+import { useSelector } from "react-redux";
+import { UserQuizCard } from "@/widgets/cards/UserQuizCard";
+import styled from 'styled-components';
+import Lottie from "lottie-react";
+import { useState } from "react";
+
 
 export function Profile() {
+
+  let userData = useSelector((state) => state.user);
+  console.log(userData.state.userDetails);
+  const [open, setOpen] = useState(false);
+  const [bio, setBio] = useState("");
+  const handleOpen = () => setOpen((cur) => !cur);
+  const updateBio = async () => {
+    handleOpen();
+    console.log(bio);
+  }
   return (
     <>
       <div className="relative mt-8 h-32 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
@@ -36,28 +54,28 @@ export function Profile() {
               />
               <div>
                 <Typography variant="h5" color="blue-gray" className="mb-1">
-                  username
+                  {userData.state.userDetails.username}
                 </Typography>
                 <Typography
                   variant="small"
                   className="font-normal text-blue-gray-600"
                 >
-                  user
+                  {userData.state.userDetails.fullName}
                 </Typography>
               </div>
             </div>
-            
+
           </div>
           <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-2">
-            
+            {/* profileInfo */}
             <ProfileInfoCard
               title="Profile Information"
-              description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+              description={userData.state.userDetails.about}
               details={{
-                "first name": "Alec M. Thompson",
-                mobile: "(44) 123 1234 123",
-                email: "alecthompson@mail.com",
-                location: "USA",
+                "Full name": `${userData.state.userDetails.fullName}`,
+                mobile: `${userData.state.userDetails.mobileNo}`,
+                email: `${userData.state.userDetails.email}`,
+                location: `${userData.state.userDetails.country}`,
                 social: (
                   <div className="flex items-center gap-4">
                     <i className="fa-brands fa-facebook text-blue-700" />
@@ -68,32 +86,37 @@ export function Profile() {
               }}
               action={
                 <Tooltip content="Edit Profile">
-                  <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
+                  <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" onClick={handleOpen} />
                 </Tooltip>
               }
             />
-            <div>
-              <Typography variant="h6" color="blue-gray" className="mb-3">
-                Conversations
-              </Typography>
-              <ul className="flex flex-col gap-6">
-                {conversationsData.map((props) => (
-                  <MessageCard
-                    key={props.name}
-                    {...props}
-                    action={
-                      <Button variant="text" size="sm">
-                        reply
-                      </Button>
-                    }
-                  />
-                ))}
-              </ul>
-            </div>
+            <Dialog
+              size="xs"
+              open={open}
+              handler={handleOpen}
+              className="bg-transparent shadow-none"
+            >
+              <Card className="mx-auto w-full max-w-[24rem]">
+                <CardBody className="flex flex-col gap-4">
+                  <Typography variant="h4" color="blue-gray" className="flex gap-2 items-center">
+                    Bio
+                    <PencilIcon className="h-4 w-4 text-blue-gray-500" />
+                  </Typography>
+                  <Textarea label="Write something about yourself..." size="lg" onChange={(e) => { setBio(e.target.value) }} />
+                </CardBody>
+                <CardFooter className="pt-0">
+                  <Button variant="gradient" onClick={updateBio} fullWidth>
+                    Save
+                  </Button>
+                </CardFooter>
+              </Card>
+            </Dialog>
+            <Lottie animationData={animated} />
+
           </div>
           <div className="px-4 pb-4">
             <Typography variant="h6" color="blue-gray" className="mb-2">
-              Projects
+              Attempted Quiz
             </Typography>
             <Typography
               variant="small"
@@ -102,66 +125,7 @@ export function Profile() {
               Architects design houses
             </Typography>
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
-              {projectsData.map(
-                ({ img, title, description, tag, route, members }) => (
-                  <Card key={title} color="transparent" shadow={false}>
-                    <CardHeader
-                      floated={false}
-                      color="gray"
-                      className="mx-0 mt-0 mb-4 h-64 xl:h-40"
-                    >
-                      <img
-                        src={img}
-                        alt={title}
-                        className="h-full w-full object-cover"
-                      />
-                    </CardHeader>
-                    <CardBody className="py-0 px-1">
-                      <Typography
-                        variant="small"
-                        className="font-normal text-blue-gray-500"
-                      >
-                        {tag}
-                      </Typography>
-                      <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="mt-1 mb-2"
-                      >
-                        {title}
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        className="font-normal text-blue-gray-500"
-                      >
-                        {description}
-                      </Typography>
-                    </CardBody>
-                    <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
-                      <Link to={route}>
-                        <Button variant="outlined" size="sm">
-                          view project
-                        </Button>
-                      </Link>
-                      <div>
-                        {members.map(({ img, name }, key) => (
-                          <Tooltip key={name} content={name}>
-                            <Avatar
-                              src={img}
-                              alt={name}
-                              size="xs"
-                              variant="circular"
-                              className={`cursor-pointer border-2 border-white ${
-                                key === 0 ? "" : "-ml-2.5"
-                              }`}
-                            />
-                          </Tooltip>
-                        ))}
-                      </div>
-                    </CardFooter>
-                  </Card>
-                )
-              )}
+              <UserQuizCard />
             </div>
           </div>
         </CardBody>
