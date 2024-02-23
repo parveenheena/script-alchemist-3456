@@ -1,0 +1,17 @@
+const express = require('express');
+const { auth } = require('../middleware/auth.middleware');
+const { QuestionModel } = require('../models/question.model');
+
+const questionRouter = express.Router();
+questionRouter.get('/', async (req,res) => {
+ try{
+   const questions = await QuestionModel.find(req.body);
+   res.status(200).send({questions});
+ } catch(error) {
+res.status(400).send({error});
+ }
+})
+
+module.exports = {
+    questionRouter
+}
