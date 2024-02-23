@@ -3,7 +3,7 @@ const { auth } = require('../middleware/auth.middleware');
 const { QuestionModel } = require('../models/question.model');
 
 const questionRouter = express.Router();
-questionRouter.get('/', async (req,res) => {
+questionRouter.post('/', async (req,res) => {
  try{
    const questions = await QuestionModel.find(req.body);
    res.status(200).send({questions});
