@@ -96,6 +96,9 @@ const Login = () => {
       borderWidth={1}
       borderRadius={8}
       bg='black'
+
+      h="100%"
+
     >
       <Flex flexDir='column' pb='10%' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
         <Flex h='17vh' w='100%' justify='space-between' align='center'>

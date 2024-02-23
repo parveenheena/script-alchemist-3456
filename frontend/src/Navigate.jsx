@@ -4,6 +4,9 @@ import { Dashboard } from "@/layouts";
 import Login from "./pages/Login"; // Import your Login component
 import SignupPage from "./pages/SignupPage"; // Import your Signup component
 
+import Quiz from './pages/dashboard/Quiz';
+
+
 function Navigater() {
   return (
     <Routes>
@@ -11,6 +14,7 @@ function Navigater() {
       <Route path="/signuppage" element={<SignupPage />} />
       <Route path="/dashboard/*" element={<Dashboard />} />
       <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect "/" to "/login" */}
+      <Route path="/quiz" element={<Quiz/>} /> 
     </Routes>
   )
 }

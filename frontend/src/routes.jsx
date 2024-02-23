@@ -4,6 +4,7 @@ import {
 
 } from "@heroicons/react/24/solid";
 import { Home, Profile,  } from "@/pages/dashboard";
+import Quiz from "./pages/dashboard/Quiz";
 
 
 const icon = {
@@ -26,6 +27,13 @@ export const routes = [
         path: "/profile",
         element: <Profile />,
       }
+      // ,
+      // {
+      //   icon: <UserCircleIcon {...icon} />,
+      //   name: "quiz",
+      //   path: "/quiz",
+      //   element: <Quiz />,
+      // }
     ],
   }
 ];
