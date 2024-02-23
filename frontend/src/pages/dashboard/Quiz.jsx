@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { QuestionData } from './Questions';
+// import { QuestionData } from './Questions';
 import QuizResult from './Quizresult';
 import { Box, Button, Container, Text, Progress, Badge, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Card, CardBody } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { Typography } from '@material-tailwind/react';
+import { useSelector } from 'react-redux';
 
 const Quiz = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
+    const QuestionData = useSelector(state=>state.user.question)
     const [clickedOptions, setClickedOptions] = useState(Array(QuestionData.length).fill(0));
     const [showResult, setShowResult] = useState(false);
     const [timeLeft, setTimeLeft] = useState(15); // 5 seconds for testing purpose
     const [isTimeUp, setIsTimeUp] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const navigate = useNavigate(); // Initialize useNavigate hook
-
+    
     useEffect(() => {
         const timer = setInterval(() => {
             if (timeLeft > 0) {
@@ -116,7 +118,7 @@ const Quiz = () => {
         position="relative"
     >
         <Text fontSize={["xl", "2xl"]} fontWeight="bold" textAlign="center" mt={4} mb={6}>
-            Quiz App
+            {QuestionData[0].language} Quiz 
         </Text>
         <Box position="absolute" top={2} right={2}>
             <Badge colorScheme="yellow" fontSize="lg">
