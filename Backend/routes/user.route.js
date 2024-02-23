@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const userRouter = express.Router();
 
 userRouter.post('/register', async (req, res) => {
-    const {username, email, mobileNo, password} = req.body;
+    const {username, fullName, country, mobileNo, email, password} = req.body;
     
     try{
         const user = await UserModel.findOne({ email });
@@ -16,7 +16,7 @@ userRouter.post('/register', async (req, res) => {
 
         bcrypt.hash(password, 8, async (err, hash) => {
             if(hash){
-                const user = new UserModel({username, email, mobileNo, password: hash});
+                const user = new UserModel({username, fullName, country, mobileNo, email, password: hash});
                 await user.save();
                 res.send({"msg": "new user has been registered"});
             } else{
