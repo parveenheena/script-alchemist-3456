@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "logger": "^0.0.1",
-    "lottie-react": "^2.4.0",
-    "redux-logger": "^3.0.6"
-  }
-}
