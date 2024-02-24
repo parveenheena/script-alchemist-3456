@@ -1,27 +1,22 @@
 import { useLocation, Link } from "react-router-dom";
 import {
-  Navbar,
+  Navbar, 
   Typography,
   IconButton,
   Breadcrumbs,
   Input,
-
 } from "@material-tailwind/react";
-import {
-
-  Bars3Icon,
-} from "@heroicons/react/24/solid";
-import {
-  useMaterialTailwindController,
-
-  setOpenSidenav,
-} from "@/context";
+import {Bars3Icon} from "@heroicons/react/24/solid";
+import {useMaterialTailwindController,setOpenSidenav} from "@/context";
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
+
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  let userInfo = userData.userDetails;
 
   return (
     <Navbar
@@ -55,7 +50,7 @@ export function DashboardNavbar() {
               color="blue-gray"
               className="font-normal"
             >
-              {page}
+              {userInfo.username}
             </Typography>
           </Breadcrumbs>
           <Typography variant="h6" color="blue-gray">

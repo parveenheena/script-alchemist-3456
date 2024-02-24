@@ -8,17 +8,14 @@ import {
   Tooltip,
   Button,
   Dialog,
-  Input,
-  Checkbox,
   Textarea,
 } from "@material-tailwind/react";
 
 import animated from "../../assets/animationProfile.json"
-import { Link } from "react-router-dom";
-import { MessageCard, ProfileInfoCard } from "@/widgets/cards";
+// import { Link } from "react-router-dom";
+import { ProfileInfoCard } from "@/widgets/cards";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import { conversationsData, projectsData } from "@/data";
-import { useSelector } from "react-redux";
+// import { conversationsData, projectsData } from "@/data";
 import { UserQuizCard } from "@/widgets/cards/UserQuizCard";
 
 import Lottie from "lottie-react";
@@ -27,8 +24,10 @@ import { useState } from "react";
 
 export function Profile() {
 
-  let userData = useSelector((state) => state.user);
-  console.log(userData.state.userDetails);
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  let userInfo = userData.userDetails;
+  // console.log(userData.token); 
+
   const [open, setOpen] = useState(false);
   const [bio, setBio] = useState("");
   const handleOpen = () => setOpen((cur) => !cur);
@@ -54,13 +53,13 @@ export function Profile() {
               />
               <div>
                 <Typography variant="h5" color="blue-gray" className="mb-1">
-                  {userData.state.userDetails.username}
+                  {userInfo.username}
                 </Typography>
                 <Typography
                   variant="small"
                   className="font-normal text-blue-gray-600"
                 >
-                  {userData.state.userDetails.fullName}
+                  {userInfo.fullName}
                 </Typography>
               </div>
             </div>
@@ -70,12 +69,12 @@ export function Profile() {
             {/* profileInfo */}
             <ProfileInfoCard
               title="Profile Information"
-              description={userData.state.userDetails.about}
+              description={userInfo.about}
               details={{
-                "Full name": `${userData.state.userDetails.fullName}`,
-                mobile: `${userData.state.userDetails.mobileNo}`,
-                email: `${userData.state.userDetails.email}`,
-                location: `${userData.state.userDetails.country}`,
+                "Full name": `${userInfo.fullName}`,
+                mobile: `${userInfo.mobileNo}`,
+                email: `${userInfo.email}`,
+                location: `${userInfo.country}`,
                 social: (
                   <div className="flex items-center gap-4">
                     <i className="fa-brands fa-facebook text-blue-700" />
