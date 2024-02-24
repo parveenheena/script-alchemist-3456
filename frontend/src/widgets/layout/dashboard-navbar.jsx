@@ -50,11 +50,11 @@ export function DashboardNavbar() {
               color="blue-gray"
               className="font-normal"
             >
-              {userInfo.username}
+              {page}
             </Typography>
           </Breadcrumbs>
           <Typography variant="h6" color="blue-gray">
-            {page}
+            {userInfo.username}
           </Typography>
         </div>
         <div className="flex items-center">

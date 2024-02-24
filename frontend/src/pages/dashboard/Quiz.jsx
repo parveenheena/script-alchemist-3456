@@ -17,9 +17,6 @@ const Quiz = () => {
         const timer = setInterval(() => {
             if (timeLeft > 0) { 
                 setTimeLeft(prevTime => prevTime - 1);
-            // } else if(nextQuestion === QuestionData.length){
-            //     clearInterval(timer);
-            //     setIsTimeUp(true);
             }else{
                 clearInterval(timer);
                 setIsTimeUp(true);
@@ -101,7 +98,7 @@ const Quiz = () => {
      
         <Box>
             {showResult ? (
-                <QuizResult score={score} totalScore={QuestionData.length} tryAgain={resetAll} />
+                <QuizResult score={score} language={QuestionData[0].language} totalScore={QuestionData.length} tryAgain={resetAll} />
             ) : (
                 <>
                 <Box position="absolute" top={2} right={2}>
