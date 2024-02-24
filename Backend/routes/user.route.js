@@ -58,6 +58,7 @@ userRouter.post("/login", async (req, res) => {
 
 userRouter.patch("/:userId", auth, async (req, res) => {
   const { userId, language, score } = req.body;
+  console.log(userId);
   try {
     const user = await UserModel.findById(userId);
     if (!user) {
