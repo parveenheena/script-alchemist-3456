@@ -18,12 +18,26 @@ function QuizResult({ score, totalScore, tryAgain }) {
                 Total Score: {totalScore}
             </Text>
             <Box>
-                <Button color="black" bg='#00FFFF' size="lg" onClick={tryAgain}>
-                    Try Again
-                </Button>
-                <Button color="black" bg='#00FFFF' size="lg" onClick={goToDashboard}>
-                    Dashboard
-                </Button>
+            <Button
+            mr="3"
+    bg="black"
+    color="white"
+    size="lg"
+    onClick={tryAgain}
+    _hover={{ color: 'black', bg: 'gray.200' }}
+>
+    Try Again
+</Button>
+<Button
+    bg="black"
+    color="white"
+    size="lg"
+    onClick={goToDashboard}
+    _hover={{ color: 'black', bg: 'gray.200' }}
+>
+    Dashboard
+</Button>
+
             </Box>
         </Box>
     );
