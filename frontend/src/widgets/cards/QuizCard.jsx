@@ -62,7 +62,7 @@ const navigate = useNavigate();
           </Button>
         </DialogFooter>
       </Dialog>
-    <Card className="w-64 max-w-[26rem] shadow-lg">
+    <Card className="w-66 max-w-[26rem] shadow-lg">
 
     <CardHeader floated={false}
       shadow={false}
