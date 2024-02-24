@@ -40,13 +40,13 @@ const Login = () => {
             })
         }).then(res => res.json())
             .then(data => {
-                console.log(data);
+                
                 if (data.token) {
                   const userData = {
                     token: data.token,
                     userDetails: data.userDetails,
                   }
-                  
+                  localStorage.setItem("userData", JSON.stringify(userData));
                   dispatch(setDataIntoStore(userData));
 
                     setTimeout(() => {
@@ -96,65 +96,36 @@ const Login = () => {
       borderWidth={1}
       borderRadius={8}
       bg='black'
-
-      h="100%"
-
     >
-      <Flex flexDir='column' pb='10%' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
-        <Flex h='17vh' w='100%' justify='space-between' align='center'>
-        <Image boxSize='100px'
-        ml="2%"
-          objectFit='cover'
-          src={logo}
-          borderRadius={10}
-          alt='Dan Abramov' />
+      <Flex flexDir='column' pb={['5%', '10%']} align='center' gap={10} w={['95%', '90%', '80%', '70%', '60%']} margin="auto" bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10} p={4}>
+        <Flex h='17vh' w='100%' justify={{base: "center", md: "flex-start"}} align='center'>
+          <Image boxSize={['80px', '100px', '120px']} objectFit='cover' src={logo} borderRadius={10} alt='Dan Abramov' />
         </Flex>
         <Heading as="h1" size="3xl" color='black' textShadow='2px 2px #00FFFF'>
           Login
         </Heading>
-        <form onSubmit={handleSubmit}>
+        <Flex w={['100%', '40%']} justify='center'>
+        <form onSubmit={handleSubmit} style={{ width: '100%'}}>
           <FormControl>
-            <FormLabel my='10px' fontSize={18}>Email address</FormLabel>
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              w='300px'
-              p={5}
-              fontSize={18}
-              focusBorderColor="#00FFFF"
-              borderRadius={10}
-            />
+            <FormLabel my='10px' fontSize={[14, 18]}>Email address</FormLabel>
+            <Input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} w={'100%'} p={5} fontSize={[14, 18]} focusBorderColor="#00FFFF" borderRadius={10} />
           </FormControl>
           <FormControl>
-            <FormLabel my='10px' fontSize={18}>Password</FormLabel>
-            <Input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              w='300px'
-              p={5}
-              focusBorderColor="#00FFFF"
-              fontSize={18}
-              borderRadius={10}
-            />
+            <FormLabel my='10px' fontSize={[14, 18]}>Password</FormLabel>
+            <Input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} w={'100%'} p={5} focusBorderColor="#00FFFF" fontSize={[14, 18]} borderRadius={10} />
           </FormControl>
-          <Button mt={30} w='300px' bg='#00FFFF' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' type="submit">
-            LOGIN
-          </Button>
+          <Button mt={35} _hover={{ color: 'black', bg: '#F5F5F5' }} w={'100%'}  bg='black' color='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' type="submit">LOGIN</Button>
           
-          <Flex mt={30} gap='5%' align='center'>
-          <Text fontSize={18}>Don't have an account!</Text>
-          <Button color='white' bg='Black' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' mr='2%' onClick={handleSignUpClick} >
-            Sign Up
-          </Button>
-          </Flex>
         </form>
+        </Flex>
+
+          <Flex mt={3} flexDir={['column', 'row']} justify={['center', 'space-between']} align='center' w={['90%', '40%']}>
+            <Text fontSize={[14, 18]} mb={[4, 0]}>Don't have an account!</Text>
+            <Button color='white' px='8%' bg='Black' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' _hover={{ color: 'black', bg: '#F5F5F5' }} onClick={handleSignUpClick}>Sign Up</Button>
+          </Flex>
       </Flex>
     </Box>
   );
-};
+}
 
 export default Login;

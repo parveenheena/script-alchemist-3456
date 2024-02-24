@@ -12,10 +12,10 @@ import logoutIcon from "../../assets/logout.png";
 import {useDispatch} from 'react-redux';
 import {setDataIntoStore} from '../../redux/userActionAndReducer/actions';
 
-
 export function Sidenav({  routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
+
   const sidenavTypes = {
     dark: "bg-gradient-to-br from-gray-800 to-gray-900",
     white: "bg-white shadow-sm",
@@ -49,12 +49,12 @@ export function Sidenav({  routes }) {
        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
   <Link to="/" className="py-6 px-8 text-center">
     <img style={{ height: "80px", width: "80px" }} src={verve} alt="Logo"/>
-    <Typography
+    {/* <Typography
       variant="h6"
       color={sidenavType === "dark" ? "white" : "blue-gray"}
     >
       BYTE-BLITZ
-    </Typography>
+    </Typography> */}
   </Link>
 </div>
         <IconButton
@@ -110,12 +110,17 @@ export function Sidenav({  routes }) {
                 </NavLink>
               </li>
             ))}
-            <Button className="flex items-center gap-4 px-4 capitalize" fullWidth onClick={handleLogout}>
+            <Button 
+              className="flex items-center gap-4 px-4 capitalize bg-gradient-to-br from-gray-800 to-gray-900" 
+              fullWidth 
+              onClick={handleLogout}
+            >
               <img src={logoutIcon} alt="Logout" style={{ height: "20px", width: "20px" }} />
               <Typography color="inherit" className="font-medium capitalize">
                 Logout
               </Typography>
             </Button>
+
             
           </ul>
         ))}
