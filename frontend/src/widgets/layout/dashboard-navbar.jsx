@@ -1,27 +1,24 @@
 import { useLocation, Link } from "react-router-dom";
 import {
-  Navbar,
+  Navbar, 
   Typography,
   IconButton,
   Breadcrumbs,
   Input,
-
+  Select,
+  Option,
 } from "@material-tailwind/react";
-import {
-
-  Bars3Icon,
-} from "@heroicons/react/24/solid";
-import {
-  useMaterialTailwindController,
-
-  setOpenSidenav,
-} from "@/context";
+import {Bars3Icon} from "@heroicons/react/24/solid";
+import {useMaterialTailwindController,setOpenSidenav} from "@/context";
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
+
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  let userInfo = userData.userDetails;
 
   return (
     <Navbar
@@ -59,12 +56,21 @@ export function DashboardNavbar() {
             </Typography>
           </Breadcrumbs>
           <Typography variant="h6" color="blue-gray">
-            {page}
+            {userInfo.username}
           </Typography>
         </div>
         <div className="flex items-center">
           <div className="mr-auto md:mr-4 md:w-56">
-            <Input label="Search" />
+          <div className="w-58">
+      <Select label="Select Language">
+        <Option>Select Language</Option>
+        <Option>JavaScript</Option>
+        <Option>Java</Option>
+        <Option>HTML</Option>
+        <Option>CSS</Option>
+        <Option>React</Option>
+      </Select>
+    </div>
           </div>
           <IconButton
             variant="text"

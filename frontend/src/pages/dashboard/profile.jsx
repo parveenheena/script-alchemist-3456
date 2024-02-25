@@ -8,34 +8,42 @@ import {
   Tooltip,
   Button,
   Dialog,
-  Input,
-  Checkbox,
   Textarea,
 } from "@material-tailwind/react";
 
 import animated from "../../assets/animationProfile.json"
-import { Link } from "react-router-dom";
-import { MessageCard, ProfileInfoCard } from "@/widgets/cards";
+// import { Link } from "react-router-dom";
+import { ProfileInfoCard } from "@/widgets/cards";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import { conversationsData, projectsData } from "@/data";
-import { useSelector } from "react-redux";
+// import { conversationsData, projectsData } from "@/data";
 import { UserQuizCard } from "@/widgets/cards/UserQuizCard";
 
 import Lottie from "lottie-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 export function Profile() {
 
-  let userData = useSelector((state) => state.user);
-  console.log(userData.state.userDetails);
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  let userInfo = userData.userDetails;
+  // console.log(userData.token); 
+
   const [open, setOpen] = useState(false);
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState("👋 Hi there,");
+  const [quizData, setQuizData] = useState([]);
   const handleOpen = () => setOpen((cur) => !cur);
   const updateBio = async () => {
     handleOpen();
-    console.log(bio);
+    axios.patch()
   }
+  useEffect(()=> {
+     axios.get(`http://localhost:8000/Users/${userInfo._id}`,{
+      headers:{
+        Authorization : `Bearer ${userData.token}`
+      }
+     }).then(res=>setQuizData(res.data.quizInfo)).catch(err=>console.log(err))
+  },[])
   return (
     <>
       <div className="relative mt-8 h-32 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
@@ -54,28 +62,28 @@ export function Profile() {
               />
               <div>
                 <Typography variant="h5" color="blue-gray" className="mb-1">
-                  {userData.state.userDetails.username}
+                  {userInfo.username}
                 </Typography>
                 <Typography
                   variant="small"
                   className="font-normal text-blue-gray-600"
                 >
-                  {userData.state.userDetails.fullName}
+                  {userInfo.fullName}
                 </Typography>
               </div>
             </div>
 
           </div>
-          <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-2">
+          <div className="gird-cols-2 mb-12 grid items-center gap-12 px-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
             {/* profileInfo */}
             <ProfileInfoCard
               title="Profile Information"
-              description={userData.state.userDetails.about}
+              description={bio}
               details={{
-                "Full name": `${userData.state.userDetails.fullName}`,
-                mobile: `${userData.state.userDetails.mobileNo}`,
-                email: `${userData.state.userDetails.email}`,
-                location: `${userData.state.userDetails.country}`,
+                "Full name": `${userInfo.fullName}`,
+                mobile: `${userInfo.mobileNo}`,
+                email: `${userInfo.email}`,
+                location: `${userInfo.country}`,
                 social: (
                   <div className="flex items-center gap-4">
                     <i className="fa-brands fa-facebook text-blue-700" />
@@ -114,7 +122,7 @@ export function Profile() {
             <Lottie animationData={animated} />
 
           </div>
-          <div className="px-4 pb-4">
+          <div className="px-8 pb-4">
             <Typography variant="h6" color="blue-gray" className="mb-2">
               Attempted Quiz
             </Typography>
@@ -122,10 +130,11 @@ export function Profile() {
               variant="small"
               className="font-normal text-blue-gray-500"
             >
-              Architects design houses
+             Results
             </Typography>
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
-              <UserQuizCard />
+              {quizData.map((item, index) => <UserQuizCard key={index} obj={item} />)}
+
             </div>
           </div>
         </CardBody>

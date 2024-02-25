@@ -23,7 +23,6 @@ function QuizCard({obj}) {
 const dispatch = useDispatch();
 const navigate = useNavigate();
   const startQuiz = async (language)=> {
-    handleOpen();
     try{
       const res = await axios.post(`http://localhost:8000/questions`,{language})
       dispatch(setQuizQuestion(res.data.questions));
@@ -62,7 +61,7 @@ const navigate = useNavigate();
           </Button>
         </DialogFooter>
       </Dialog>
-    <Card className="w-64 max-w-[26rem] shadow-lg">
+    <Card className="w-66 max-w-[26rem] shadow-lg">
 
     <CardHeader floated={false}
       shadow={false}
@@ -124,4 +123,4 @@ const navigate = useNavigate();
   )
 }
 
-export default QuizCard
+export {QuizCard} 

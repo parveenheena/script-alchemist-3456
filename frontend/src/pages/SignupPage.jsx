@@ -90,131 +90,120 @@ const SignupPage = () => {
       borderRadius={8}
       bg='black'
     >
-      <Flex flexDir='column' pb='10%' align='center' gap={10} w='60%' margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10}>
-        <Flex h='17vh' w='100%' justify='space-between' align='center'>
-          <Image boxSize='100px'
-            ml="2%"
-            objectFit='cover'
-            src={logo}
-            borderRadius={10}
-            alt='Dan Abramov' />
+      <Flex flexDir='column' pb={['5%', '10%']} align='center' gap={10} w={['95%', '90%', '80%', '70%', '60%']} margin={"auto"} bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10} p={4}>
+      <Flex h='17vh' w='100%' justify={{base: "center", md: "flex-start"}} align='center'>
+          <Image boxSize={['80px', '100px', '120px']} objectFit='cover' src={logo} borderRadius={10} alt='Dan Abramov' />
         </Flex>
         <Heading as="h1" size="3xl" color='black' textShadow='2px 2px #00FFFF'>
           Sign Up
         </Heading>
         <form onSubmit={handleSubmit}>
-  
-          <Grid templateRows='repeat(2, 1fr)'>
-            <Flex justify="space-between" gap={10}>
-              <FormControl>
-                <FormLabel my='10px' fontSize={18}>Username</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter your username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  w='300px'
-                  p={5}
-                  fontSize={18}
-                  focusBorderColor="#00FFFF"
-                  borderRadius={10}
-                />
-              </FormControl>
-  
-              <FormControl>
-                <FormLabel my='10px' fontSize={18}>Full Name</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter your email"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  w='300px'
-                  p={5}
-                  fontSize={18}
-                  focusBorderColor="#00FFFF"
-                  borderRadius={10}
-                />
-              </FormControl>
-            </Flex>
-  
-            <Flex justify="space-between" gap={10}>
-              <FormControl>
-                <FormLabel my='10px' fontSize={18}>Country</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter your email"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  w='300px'
-                  p={5}
-                  fontSize={18}
-                  focusBorderColor="#00FFFF"
-                  borderRadius={10}
-                />
-              </FormControl>
+  <Flex flexDir={['column', 'row']} gap={['5%', '10%']} justify={['center', 'space-between']}>
+    <FormControl>
+      <FormLabel my='10px' fontSize={18}>Username</FormLabel>
+      <Input
+        type="text"
+        placeholder="Enter your username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        w={['100%', 'auto']} // Adjusted width for mobile
+        p={5}
+        fontSize={18}
+        focusBorderColor="#00FFFF"
+        borderRadius={10}
+      />
+    </FormControl>
 
-              <FormControl>
-                <FormLabel my='10px' fontSize={18}>Mobile No.</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Enter your mobile no."
-                  value={mobileNo}
-                  onChange={(e) => setMobileNo(e.target.value)}
-                  w='300px'
-                  p={5}
-                  focusBorderColor="#00FFFF"
-                  fontSize={18}
-                  borderRadius={10}
-                />
-              </FormControl>
-            </Flex>
-  
-            <Flex justify="space-between" gap={10}>
-              
-              <FormControl>
-                <FormLabel my='10px' fontSize={18}>Email address</FormLabel>
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  w='300px'
-                  p={5}
-                  fontSize={18}
-                  focusBorderColor="#00FFFF"
-                  borderRadius={10}
-                />
-              </FormControl>
-  
-              <FormControl>
-                <FormLabel my='10px' fontSize={18}>Password</FormLabel>
-                <Input
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  w='300px'
-                  p={5}
-                  focusBorderColor="#00FFFF"
-                  fontSize={18}
-                  borderRadius={10}
-                />
-              </FormControl>
-            </Flex>
-  
-          </Grid>
-  
-          <Flex mt={10} justify={'center'}>
-          <Button mt={30} w='60%' bg='#00FFFF' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' type="submit">
-            Sign Up
-          </Button>
-          </Flex>
-        </form>
-        <Flex w='100%' mt={30} justify='center' gap='4%' align='center'>
-            <Text fontSize={20}>Already have an account!</Text>
-            <Button color='white' bg='Black' px='6%' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' mr='2%' onClick={handleLoginClick} >
-              Login
-            </Button>
+    <FormControl>
+      <FormLabel my='10px' fontSize={18}>Full Name</FormLabel>
+      <Input
+        type="text"
+        placeholder="Enter your full name"
+        value={fullName}
+        onChange={(e) => setFullName(e.target.value)}
+        w={['100%', 'auto']} // Adjusted width for mobile
+        p={5}
+        fontSize={18}
+        focusBorderColor="#00FFFF"
+        borderRadius={10}
+      />
+    </FormControl>
+  </Flex>
+
+  <Flex flexDir={['column', 'row']} gap={['5%', '10%']} justify={['center', 'space-between']}>
+    <FormControl>
+      <FormLabel my='10px' fontSize={18}>Country</FormLabel>
+      <Input
+        type="text"
+        placeholder="Enter your country"
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
+        w={['100%', 'auto']} // Adjusted width for mobile
+        p={5}
+        fontSize={18}
+        focusBorderColor="#00FFFF"
+        borderRadius={10}
+      />
+    </FormControl>
+
+    <FormControl>
+      <FormLabel my='10px' fontSize={18}>Mobile No.</FormLabel>
+      <Input
+        type="text"
+        placeholder="Enter your mobile no."
+        value={mobileNo}
+        onChange={(e) => setMobileNo(e.target.value)}
+        w={['100%', 'auto']} // Adjusted width for mobile
+        p={5}
+        focusBorderColor="#00FFFF"
+        fontSize={18}
+        borderRadius={10}
+      />
+    </FormControl>
+  </Flex>
+
+  <Flex flexDir={['column', 'row']} gap={['5%', '10%']} justify={['center', 'space-between']}>
+    <FormControl>
+      <FormLabel my='10px' fontSize={18}>Email address</FormLabel>
+      <Input
+        type="email"
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        w={['100%', 'auto']} // Adjusted width for mobile
+        p={5}
+        fontSize={18}
+        focusBorderColor="#00FFFF"
+        borderRadius={10}
+      />
+    </FormControl>
+
+    <FormControl>
+      <FormLabel my='10px' fontSize={18}>Password</FormLabel>
+      <Input
+        type="password"
+        placeholder="Enter your password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        w={['100%', 'auto']} // Adjusted width for mobile
+        p={5}
+        focusBorderColor="#00FFFF"
+        fontSize={18}
+        borderRadius={10}
+      />
+    </FormControl>
+  </Flex>
+
+  <Flex mt={[10, 30]}  justify={'center'}>
+    <Button w={['100%', '65%']} _hover={{ color: 'black', bg: '#F5F5F5' }} bg='black' color='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' type="submit">
+      Sign Up
+    </Button>
+  </Flex>
+</form>
+
+          <Flex mt={3} flexDir={['column', 'row']} justify={['center', 'space-between']} align='center' w={['90%', '40%']}>
+            <Text fontSize={18} mb={[4, 0]}>Already have an account!</Text>
+            <Button color='white' _hover={{ color: 'black', bg: '#F5F5F5' }} px='8%' bg='Black' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' onClick={handleLoginClick}>Login</Button>
           </Flex>
       </Flex>
     </Box>
