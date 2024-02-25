@@ -23,7 +23,6 @@ function QuizCard({obj}) {
 const dispatch = useDispatch();
 const navigate = useNavigate();
   const startQuiz = async (language)=> {
-    handleOpen();
     try{
       const res = await axios.post(`http://localhost:8000/questions`,{language})
       dispatch(setQuizQuestion(res.data.questions));
@@ -124,4 +123,4 @@ const navigate = useNavigate();
   )
 }
 
-export default QuizCard
+export {QuizCard} 
