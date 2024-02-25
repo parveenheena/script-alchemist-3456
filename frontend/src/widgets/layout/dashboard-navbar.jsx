@@ -5,6 +5,8 @@ import {
   IconButton,
   Breadcrumbs,
   Input,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import {Bars3Icon} from "@heroicons/react/24/solid";
 import {useMaterialTailwindController,setOpenSidenav} from "@/context";
@@ -50,7 +52,7 @@ export function DashboardNavbar() {
               color="blue-gray"
               className="font-normal"
             >
-              {userInfo.username}
+              {page}
             </Typography>
           </Breadcrumbs>
           <Typography variant="h6" color="blue-gray">
@@ -59,7 +61,15 @@ export function DashboardNavbar() {
         </div>
         <div className="flex items-center">
           <div className="mr-auto md:mr-4 md:w-56">
-            <Input label="Search" />
+          <div className="w-58">
+      <Select label="Select Language">
+        <Option>JavaScript</Option>
+        <Option>Java</Option>
+        <Option>HTML</Option>
+        <Option>CSS</Option>
+        <Option>React</Option>
+      </Select>
+    </div>
           </div>
           <IconButton
             variant="text"

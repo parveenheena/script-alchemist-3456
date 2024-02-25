@@ -73,6 +73,19 @@ userRouter.patch("/:userId", auth, async (req, res) => {
   }
 });
 
+userRouter.get("/:userId", auth, async (req, res) => {
+    const {userId} = req.params;
+  
+  try {
+    const user = await UserModel.findOne({_id:userId});
+    res.status(200).json({ quizInfo:user.quizInfo });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Internal server error" });
+  }
+});
+
+
 module.exports = {
   userRouter,
 };
