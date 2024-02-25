@@ -1,12 +1,35 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { Box, Button, Text } from '@chakra-ui/react';
+import axios from 'axios';
 
-function QuizResult({ score, totalScore, tryAgain }) {
-    const navigate = useNavigate(); // Initialize useNavigate hook
+function QuizResult({ score,language, totalScore, tryAgain }) {
+    const navigate = useNavigate(); 
 
-    const goToDashboard = () => {
-        navigate('/dashboard/home'); // Navigate to the dashboard route
+    const goToDashboard = async () => {   
+        try {
+            let userData = JSON.parse(localStorage.getItem("userData"));
+            let userInfo = userData.userDetails;
+            console.log(userInfo._id);
+    
+            const response = await fetch(`http://localhost:8000/users/${userInfo._id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${userData.token}`
+                },
+                body: JSON.stringify({
+                    language: language,
+                    score: score
+                })
+            });
+    
+            const data = await response.json();
+            console.log(data);
+        } catch(err) {
+            console.log(err);
+        }
+        navigate('/dashboard/home');
     };
 
     return (

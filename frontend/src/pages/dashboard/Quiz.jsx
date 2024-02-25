@@ -9,15 +9,15 @@ const Quiz = () => {
     const QuestionData = useSelector(state=>state.user.question)
     const [clickedOptions, setClickedOptions] = useState(Array(QuestionData.length).fill(0));
     const [showResult, setShowResult] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(300); 
+    const [timeLeft, setTimeLeft] = useState(15); 
     const [isTimeUp, setIsTimeUp] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     
     useEffect(() => {
         const timer = setInterval(() => {
-            if (timeLeft > 0) {
+            if (timeLeft > 0) { 
                 setTimeLeft(prevTime => prevTime - 1);
-            } else {
+            }else{
                 clearInterval(timer);
                 setIsTimeUp(true);
                 onOpen();
@@ -98,7 +98,7 @@ const Quiz = () => {
      
         <Box>
             {showResult ? (
-                <QuizResult score={score} totalScore={QuestionData.length} tryAgain={resetAll} />
+                <QuizResult score={score} language={QuestionData[0].language} totalScore={QuestionData.length} tryAgain={resetAll} />
             ) : (
                 <>
                 <Box position="absolute" top={2} right={2}>
@@ -168,10 +168,14 @@ const Quiz = () => {
                 Sorry, time's up! Your quiz session has ended.
             </ModalBody>
             <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={resetAll}>
+                <Button  bg="black"
+                            color="white" 
+                            _hover={{ color: 'black', bg: 'gray.200' }} mr={3} onClick={resetAll}>
                     Restart Quiz
                 </Button>
-                <Button colorScheme="green" onClick={() => {onClose(); setShowResult(true);}}>
+                <Button  bg="black"
+                            color="white" 
+                            _hover={{ color: 'black', bg: 'gray.200' }} onClick={() => {onClose(); setShowResult(true);}}>
                     Submit
                 </Button>
             </ModalFooter>
