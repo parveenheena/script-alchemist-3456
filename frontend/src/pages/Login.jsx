@@ -90,14 +90,16 @@ const Login = () => {
 
   return (
     <Box
-      p={8}
+      py={8}
       w='100%'
       mx="auto"
       borderWidth={1}
       borderRadius={8}
       bg='black'
+      h='100vh'
+
     >
-      <Flex flexDir='column' pb={['5%', '10%']} align='center' gap={10} w={['95%', '90%', '80%', '70%', '60%']} margin="auto" bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10} p={4}>
+      <Flex flexDir='column' pb={['5%', '10%']} align='center' gap={10} w={['95%', '90%', '80%', '70%', '60%']} h='90vh' margin="auto" bg='white' boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius={10} p={4}>
         <Flex h='17vh' w='100%' justify={{base: "center", md: "flex-start"}} align='center'>
           <Image boxSize={['80px', '100px', '120px']} objectFit='cover' src={logo} borderRadius={10} alt='Dan Abramov' />
         </Flex>
