@@ -1,4 +1,4 @@
-# Project Title
+# ByteBlitz
 
 ## Introduction
 This Application helps user to learn various programming languages using well organised quiz questions.
