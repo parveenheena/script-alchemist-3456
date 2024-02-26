@@ -1,17 +1,17 @@
 <h1>ByteBlitz</h1>
 
 ## Introduction
-This Application helps user to learn various programming languages using well organised quiz questions. You can upskill your knowledge about basic concept of different languages.
+ByteBlitz is a browser-based, open-source quiz application designed to aid in learning various programming languages. With organized quizzes readily accessible, users can enhance their programming skills conveniently. The platform welcomes contributions, allowing users to customize and improve it according to their needs. You can upskill your knowledge about basic concept of different languages.
 
 ## Project Type
 Fullstack
 
 ## Deplolyed App
-Frontend: https://deployed-site.whatever
+Frontend: https://byte-blitz-five.vercel.app/
 
-Backend: https://deployed-site.whatever
+Backend: https://embarrassed-outfit-eel.cyclic.app/
 
-
+<br>
 
 ## Directory Structure
 script-alchemist-3456/
@@ -21,7 +21,7 @@ script-alchemist-3456/
 ├─ frontend/
 
 
-
+<br>
 
 ## Features
 List out the key features of your application.
@@ -71,19 +71,27 @@ List out the key features of your application.
 Detailed instructions on how to install, configure, and get the project running. For our project, guide the reviewer how to check mongodb schema etc.
 
 ```bash
-npm create vite@latest
+git clone https://github.com/sur-123-bhi/script-alchemist-3456.git
 cd script-alchemist-3456
-npm run dev
-```
 
+Backend --> npm install
+        --> npm run server
+
+Frontend --> npm install
+         --> npm run dev
+```
+<br>
 ## Usage
 
 ```bash
 It will start with Login Page. You need to login with correct credentials, then it will redirect you to dashboard. Where you can select and start any quiz.
 ```
-## Credentials
-You can sign up with to make an account and use the same email and password for login
+<br>
 
+## Credentials
+You can sign up to make an account and use the same email and password for login
+
+<br>
 
 ## API Endpoints
 
@@ -104,6 +112,9 @@ GET /question/
 
 to fetch all the user details -----
 GET /Users/:id
+
+
+<br>
 
 ## Technology Stack
 List of the technologies used in the project.
